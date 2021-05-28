@@ -1,0 +1,8 @@
+.player_body {
+    display: flex;
+    overflow-y: overlay;
+}
+
+.player_body::-webkit-scrollbar {
+    display: none;
+}

@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+//client id   303c3b40ace344ca9a9b75db7ea2f2e6
+import React, { useEffect, useState } from "react";
+import Login from "./components/Login";
+import Player from "./components/Player";
+
+import "./App.css";
+import { getTokenFromUrl } from "./spotify";
+import SpotifyWebApi from "spotify-web-api-js";
+import { useDataLayerValue } from "./DataLayer";
+
+const spotify = new SpotifyWebApi();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [{ user, token }, dispatch] = useDataLayerValue();
+
+  //above line user id=s taken from the datalayer ie; datalayer.user
+  //dispatch is used to pull or push ityems in datalayer ie; to get or update or add in datalayer
+
+  useEffect(() => {
+    const hash = getTokenFromUrl();
+    window.location.hash = "";
+    const _token = hash.access_token;
+
+    if (_token) {
+      dispatch({
+        type: "SET_TOKEN",
+        token: _token,
+      });
+      //  setToken(_token)
+      //set the access token to spotify web api
+      spotify.setAccessToken(_token);
+      spotify.getMe().then((user) => {
+        //to add items to the datalayer using the dispatch
+        dispatch({
+          type: "SET_USER",
+          user: user,
+        });
+      });
+      spotify.getUserPlaylists().then((playlists) => {
+        console.log(playlists);
+        dispatch({
+          type: "SET_PLAYLIST",
+          playlists: playlists,
+        });
+      });
+      spotify.getPlaylist('37i9dQZEVXcFdUqjSAPRYh').then((response)=>{
+        dispatch({
+          type:"SET_DISCOVER_WEEKLY",
+          discover_weekly:response
+
+        })
+      })
+
+    }
+  }, []);
+
+  return <div className="App">{token ? <Player  /> : <Login />}</div>;
 }
 
 export default App;

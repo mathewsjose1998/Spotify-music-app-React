@@ -1,0 +1,35 @@
+.songrow {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 20px;
+    margin-left: 20px;
+    transition: 200ms color ease-in;
+}
+
+.songrow:hover {
+    cursor: pointer;
+    background-color: black;
+
+    opacity: 0.8;
+}
+
+.songrow>img {
+    height: 40px;
+    object-fit: contain;
+    padding-right: 10px;
+}
+
+.songrow__info>h1 {
+    font-size: 20px;
+}
+
+.songrow__info {
+    margin-left: 15px;
+}
+
+.songrow__info>p {
+    font-size: 14px;
+    margin-top: 3px;
+    color: gray;
+}
