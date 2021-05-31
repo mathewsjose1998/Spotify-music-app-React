@@ -4,7 +4,7 @@ import {Avatar} from '@material-ui/core'
 import './Header.css'
 import { useDataLayerValue } from '../DataLayer';
 
-const Header = () => {
+const Header = ({spotify}) => {
     const [{user},dispatch]=useDataLayerValue();
     return (
         <div className="header">

@@ -1,14 +1,14 @@
 import React from 'react'
 import './SongRow.css'
 
-const SongRow = ({ track }) => {
-    console.log('track')
+const SongRow = ({ track, playSong }) => {
+
     return (
-        <div className="songrow">
+        <div className="songrow" onClick={() => playSong(track.id)}> 
             <img src={track.album.images[0].url} className="songrow__album" alt="" />
             <div className="songrow__info">
             <h1>{track.name}</h1> 
-            <p className="songrow_album">
+            <p >
                 {track.artists.map((artist)=>
                     artist.name).join(',')} -{" "}
                 {track.album.name}

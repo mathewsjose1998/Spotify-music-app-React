@@ -4,15 +4,15 @@ import Sidebar from  './Sidebar'
 import './Player.css'
 import Footer from './Footer'
 
-const Player = () => {
+const Player = ({spotify}) => {
     return (
         <div className="player">
             <div className="player_body">
                 <Sidebar/>
-                <Body/>
+                <Body spotify={spotify}/>
 
             </div>
-            <Footer/>
+            <Footer spotify={spotify}/>
           
         </div>
     )

@@ -37,7 +37,7 @@ function App() {
         });
       });
       spotify.getUserPlaylists().then((playlists) => {
-        console.log(playlists);
+     
         dispatch({
           type: "SET_PLAYLIST",
           playlists: playlists,
@@ -50,11 +50,22 @@ function App() {
 
         })
       })
+      spotify.getMyTopArtists().then((response) =>
+        dispatch({
+          type: "SET_TOP_ARTISTS",
+          top_artists: response,
+        })
+      );
+
+      dispatch({
+        type: "SET_SPOTIFY",
+        spotify: spotify,
+      });
 
     }
-  }, []);
+  }, [token,dispatch]);
 
-  return <div className="App">{token ? <Player  /> : <Login />}</div>;
+  return <div className="App">{token ? <Player spotify={spotify} /> : <Login />}</div>;
 }
 
 export default App;
